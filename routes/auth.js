@@ -21,6 +21,7 @@ router.post('/register', (req, res) => {
           throw err;
         } else {
           newUser.password = hash;
+          // Replace line below with a function which will send the new user out to the database
           res.json(newUser);
         }
       })
