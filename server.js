@@ -1,32 +1,17 @@
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
-const mysql = require('mysql');
 const port = process.env.PORT || 8000;
-const connection = mysql.createConnection({
-/* 
-  INSERT CONNECTION DATA HERE:
-  host: '',
-  user: '',
-  password: '',
-  database: ''
-*/  
-});
+const sql = require('./db.js');
 
-// Database connection:
+// Body Parser Middleware
+app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.json());
 
-/*
-connection.connect(err => {
-  if(err) {
-    throw err;
-  } else {
-    console.log('MySQL connected.');
-  };
-});
-*/
-
+// Test Route
 app.get('/test', (req, res) => {
   res.send('Hello World');
 });
 
+// Server
 app.listen(port, () => console.log(`Server is running on port ${port}.`));
