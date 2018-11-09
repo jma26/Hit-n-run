@@ -9,30 +9,46 @@ const sql = require('../db/db');
 // @DESCRIPTION - Checks for an existing user. If there is no existing user, register the new user
 // @TODO - Hook it up to the SQL database; Check for existing user
 router.post('/register', (req, res) => {
+  let errors = {};
   const isValid = validateInput.validateRegistration(req.body);
   if(isValid === true) {
-    // Check for an existing user
-    const newUser = {
-      firstName: req.body.firstName,
-      lastName: req.body.lastName,
-      email: req.body.email,
-      password: req.body.password
-    };
-    bcrypt.genSalt(10, (err, salt) => {
-      bcrypt.hash(newUser.password, salt, (err, hash) => {
-        if(err) {
-          throw err;
-        } else {
-          newUser.password = hash;
-          const sqlQuery = "INSERT INTO `user` (`first_name`, `last_name`,`email`, `password`) VALUES ('"+newUser.firstName+"','"+newUser.lastName+"','"+newUser.email+"','"+newUser.password+"')"
-          sql.query(sqlQuery, (err, result) => {
-            if(err) throw err;
-            console.log('1 record inserted.');
-          });
-        }
-      })
+    // Check for existing user
+    sql.query({
+      sql: 'SELECT * FROM `user` WHERE `email` = ?',
+    }, 
+    [req.body.email],
+    (err, result) => {
+      if(result[0]) {
+        errors.userExists = 'User already exists.';
+        return res.status(500).json(errors);
+        sql.destroy();
+      } else {
+        // Hash the password and insert the user
+        const newUser = {
+          firstName: req.body.firstName,
+          lastName: req.body.lastName,
+          email: req.body.email,
+          password: req.body.password
+        };
+        bcrypt.genSalt(10, (err, salt) => {
+          bcrypt.hash(newUser.password, salt, (err, hash) => {
+            if(err) {
+              throw err;
+            } else {
+              newUser.password = hash;
+              const sqlQuery = "INSERT INTO `user` (`first_name`, `last_name`,`email`, `password`) VALUES ('"+newUser.firstName+"','"+newUser.lastName+"','"+newUser.email+"','"+newUser.password+"')"
+              sql.query(sqlQuery, (err, result) => {
+                if(err) throw err;
+                console.log('1 record inserted.');
+              });
+              return res.status(200).send(`${newUser.firstName + ' ' + newUser.lastName} is now registered!`);
+            }
+          })
+        });
+      }
     });
   } else {
+    // Send out input errors
     return res.status(500).json(isValid);
   }
 });
