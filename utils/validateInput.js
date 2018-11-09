@@ -36,5 +36,22 @@ module.exports = {
     } else {
       return true;
     }
-  }
+  },
+  validateLogin(data) {
+    let errors = {};
+    if(Validator.isEmpty(data.email)) {
+      errors.emailEmpty = 'Email field is required.';
+    }
+    if(!Validator.isEmail(data.email)) {
+      errors.emailInvalid = 'Email address is not valid.';
+    }
+    if(Validator.isEmpty(data.password)) {
+      errors.passwordEmpty = 'Password Field is required.';
+    }
+    if(errors.emailEmpty || errors.emailInvalid || errors.passwordEmpty) {
+      return errors;
+    } else {
+      return true;
+    }
+  } 
 };
