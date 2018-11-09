@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
-const uuid = require('uuid/v4');
 const validateInput = require('../utils/validateInput');
+const sql = require('../db/db');
 
 // @ACCESS - Public
 // @ENDPOINT - /api/auth/register
@@ -13,7 +13,6 @@ router.post('/register', (req, res) => {
   if(isValid === true) {
     // Check for an existing user
     const newUser = {
-      id: uuid(),
       firstName: req.body.firstName,
       lastName: req.body.lastName,
       email: req.body.email,
@@ -25,8 +24,11 @@ router.post('/register', (req, res) => {
           throw err;
         } else {
           newUser.password = hash;
-          // Register the new user in the database
-          res.json(newUser);
+          const sqlQuery = "INSERT INTO `user` (`first_name`, `last_name`,`email`, `password`) VALUES ('"+newUser.firstName+"','"+newUser.lastName+"','"+newUser.email+"','"+newUser.password+"')"
+          sql.query(sqlQuery, (err, result) => {
+            if(err) throw err;
+            console.log('1 record inserted.');
+          });
         }
       })
     });
