@@ -6,8 +6,6 @@
 
 ### Todos:
 
-* Fix the database connection
-
 * Link the database with the Express back-end
 
 * Test the database connection
