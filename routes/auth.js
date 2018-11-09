@@ -6,7 +6,7 @@ const validateInput = require('../utils/validateInput');
 
 // @ACCESS - Public
 // @ENDPOINT - /api/auth/register
-// @DESCRIPTION - Checks the user input, which if valid, will be sent out to the database as a new user
+// @DESCRIPTION - Checks for an existing user. If there is no existing user, register the new user
 // @TODO - Hook it up to the SQL database; Check for existing user
 router.post('/register', (req, res) => {
   const isValid = validateInput.validateRegistration(req.body);
@@ -25,7 +25,7 @@ router.post('/register', (req, res) => {
           throw err;
         } else {
           newUser.password = hash;
-          // Replace line below with a function which will send the new user out to the database
+          // Register the new user in the database
           res.json(newUser);
         }
       })
@@ -37,12 +37,12 @@ router.post('/register', (req, res) => {
 
 // @ACCESS - Public
 // @ENDPOINT - /api/auth/login
-// @DESCRIPTION - Checks the user input for an existing user, and if there is an user, validate it if the login info is correct
+// @DESCRIPTION - Check for an existing user. If an user exists, check if the information provided matches the information within the database
 // @TODO - Hook it up to the SQL database
 router.post('/login', (req, res) => {
   const isValid = validateInput.validateLogin(req.body);
   if(isValid === true) {
-    // Check for an existing user, and if there is one, check it's login information with the information within the database
+    // Check for an existing user within the database
     const user = {
       email: req.body.email
     };

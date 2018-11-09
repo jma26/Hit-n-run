@@ -23,7 +23,7 @@ module.exports = {
       errors.emailInvalid = 'Email address is not valid.';
     }
     if(Validator.isEmpty(data.password)) {
-      errors.passwordEmpty = 'Password Field is required.';
+      errors.passwordEmpty = 'Password field is required.';
     }
     if(!Validator.isLength(data.password, {min: 8, max: 32})) {
       errors.passwordLength = 'Password has to be between 8 and 32 characters long.';
@@ -37,6 +37,7 @@ module.exports = {
       return true;
     }
   },
+  // Login form input validation
   validateLogin(data) {
     let errors = {};
     if(Validator.isEmpty(data.email)) {
@@ -46,7 +47,7 @@ module.exports = {
       errors.emailInvalid = 'Email address is not valid.';
     }
     if(Validator.isEmpty(data.password)) {
-      errors.passwordEmpty = 'Password Field is required.';
+      errors.passwordEmpty = 'Password field is required.';
     }
     if(errors.emailEmpty || errors.emailInvalid || errors.passwordEmpty) {
       return errors;
