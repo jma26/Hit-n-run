@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
+const uuid = require('uuid/v4');
 const validateRegistration = require('../utils/validation/validateRegistration');
 
 // @ACCESS - Public
@@ -11,7 +12,9 @@ router.post('/register', (req, res) => {
   const isValid = validateRegistration(req.body);
   if(isValid === true) {
     const newUser = {
-      username: req.body.username,
+      id: uuid(),
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
       email: req.body.email,
       password: req.body.password
     };

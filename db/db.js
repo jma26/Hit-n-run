@@ -6,14 +6,6 @@ const connection = mysql.createConnection({
   database: 'hit-n-run'
 });
 
-/*
-connection.connect(err => {
-  if(err) {
-    throw err;
-  } else {
-    console.log('MySQL connected.');
-  }
-});
-*/
+// connection.connect((err) => { if(err) throw err; });
 
 module.exports = connection;

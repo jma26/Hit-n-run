@@ -2,11 +2,17 @@ const Validator = require('validator');
 
 module.exports = function validateRegistration(data) {
   let errors = {};
-  if(Validator.isEmpty(data.username)) {
-    errors.usernameEmpty = 'Username field is required.';
+  if(Validator.isEmpty(data.firstName)) {
+    errors.firstNameEmpty = 'First Name field is required.';
   }
-  if(!Validator.isLength(data.username, {min: 3, max: 18})) {
-    errors.usernameLength = 'Username has to be between 3 and 18 characters long.';
+  if(!Validator.isLength(data.firstName, {min: 3, max: 18})) {
+    errors.firstNameLength = 'First Name has to be between 3 and 18 characters long.';
+  }
+  if(Validator.isEmpty(data.lastName)) {
+    errors.lastNameEmpty = 'Last Name field is required.';
+  }
+  if(!Validator.isLength(data.lastName, {min: 3, max: 18})) {
+    errors.lastNameLength = 'Last Name has to be between 3 and 18 characters long.';
   }
   if(Validator.isEmpty(data.email)) {
     errors.emailEmpty = 'Email field is required.';
@@ -23,7 +29,7 @@ module.exports = function validateRegistration(data) {
   if(data.password !== data.confirmPassword) {
     errors.passwordNotMatching = 'Passwords are not matching.';
   }
-  if(errors.usernameEmpty || errors.usernameLength || errors.emailEmpty || errors.emailInvalid || errors.passwordEmpty || errors.passwordLength || errors.passwordNotMatching) {
+  if(errors.firstNameEmpty || errors.firstNameLength || errors.lastNameEmpty || errors.lastNameLength || errors.emailEmpty || errors.emailInvalid || errors.passwordEmpty || errors.passwordLength || errors.passwordNotMatching) {
     return errors;
   } else {
     return true;
