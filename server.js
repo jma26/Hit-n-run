@@ -11,7 +11,7 @@ app.use(bodyParser.json());
 
 // Test Route
 app.get('/test', (req, res) => {
-  res.send('Hello World');
+  return res.status(200).send('Hello World');
 });
 
 // Routes
