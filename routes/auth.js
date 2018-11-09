@@ -19,8 +19,7 @@ router.post('/register', (req, res) => {
     (err, result) => {
       if(result[0]) {
         errors.userExists = 'User already exists.';
-        return res.status(500).json(errors);
-        sql.destroy();
+        return res.status(400).json(errors);
       } else {
         // Hash the password and insert the user
         const newUser = {
@@ -47,7 +46,7 @@ router.post('/register', (req, res) => {
       }
     });
   } else {
-    return res.status(500).json(isValid);
+    return res.status(400).json(isValid);
   }
 });
 
@@ -83,11 +82,11 @@ router.post('/login', (req, res) => {
           });
       } else {
         errors.userDoesNotExist = 'User does not exist.';
-        return res.status(500).json(errors);
+        return res.status(400).json(errors);
       }
     });
   } else {
-    return res.status(500).json(isValid);
+    return res.status(400).json(isValid);
   }
 });
 
