@@ -7,7 +7,6 @@ const sql = require('../db/db');
 // @ACCESS - Public
 // @ENDPOINT - /api/auth/register
 // @DESCRIPTION - Checks for an existing user. If there is no existing user, register the new user
-// @TODO - Hook it up to the SQL database; Check for existing user
 router.post('/register', (req, res) => {
   let errors = {};
   const isValid = validateInput.validateRegistration(req.body);
@@ -48,7 +47,6 @@ router.post('/register', (req, res) => {
       }
     });
   } else {
-    // Send out input errors
     return res.status(500).json(isValid);
   }
 });
@@ -56,15 +54,38 @@ router.post('/register', (req, res) => {
 // @ACCESS - Public
 // @ENDPOINT - /api/auth/login
 // @DESCRIPTION - Check for an existing user. If an user exists, check if the information provided matches the information within the database
-// @TODO - Hook it up to the SQL database
 router.post('/login', (req, res) => {
+  let errors = {};
   const isValid = validateInput.validateLogin(req.body);
   if(isValid === true) {
-    // Check for an existing user within the database
-    const user = {
-      email: req.body.email
-    };
-    return res.status(200).json({user: user, loggedIn: true});
+    // Check for existing user
+    sql.query({
+      sql: 'SELECT * FROM `user` WHERE `email` = ?',
+    }, 
+    [req.body.email],
+    (err, result) => {
+      if(result[0]) {
+        // Decrypt the password and check if they match
+        const user = result[0];
+        bcrypt.compare(req.body.password, user.password)
+          .then(match => {
+            if(match) {
+              const payload = {
+                id: user.id,
+                name: user.first_name + ' ' + user.last_name,
+                email: user.email
+              };
+              return res.status(200).json(payload);
+            } else {
+              errors.incorrectPassword = 'Incorrect password.';
+              return res.status(400).json(errors);
+            }
+          });
+      } else {
+        errors.userDoesNotExist = 'User does not exist.';
+        return res.status(500).json(errors);
+      }
+    });
   } else {
     return res.status(500).json(isValid);
   }
