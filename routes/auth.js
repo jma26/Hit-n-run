@@ -2,14 +2,14 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
 const uuid = require('uuid/v4');
-const validateRegistration = require('../utils/validation/validateRegistration');
+const validateInput = require('../utils/validateInput');
 
 // @ACCESS - Public
 // @ENDPOINT - /api/auth/register
 // @DESCRIPTION - Checks the user input via the validateRegistration function, and sends out the user info in a JSON object
 // @TODO - Hook it up to the SQL database
 router.post('/register', (req, res) => {
-  const isValid = validateRegistration(req.body);
+  const isValid = validateInput.validateRegistration(req.body);
   if(isValid === true) {
     const newUser = {
       id: uuid(),
