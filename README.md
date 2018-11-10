@@ -6,8 +6,4 @@
 
 ### Todos:
 
-* Link the database with the Express back-end
-
-* Test the database connection
-
-* Link up the authentication routes with the database
+* Incidents route
