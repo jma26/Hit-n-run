@@ -9,15 +9,29 @@ const sql = require('../db/db');
 // @DESCRIPTION - Get all reported incidents
 router.get('/all', (req, res) => {
   // Query the database, grab the incidents and send them out
-  res.send('Incidents route');
+  const sqlQuery = "SELECT * FROM `incidents`";
+  sql.query(sqlQuery, (err, result) => {
+    if(err) throw err;
+    res.json(result);
+  });
 });
 
 // @ACCESS - Private
 // @ENDPOINT - /api/incidents/add
 // @DESCRIPTION - Get all reported incidents
 router.post('/add', passport.authenticate('jwt', { session: false }), (req, res) => {
-  // Check the input, and if valid, send it out to the database
-  res.send('Incidents route');
+  // Send out a new incident report to the database
+  const newIncident = {
+    userId: req.user.id,
+    latitude: req.body.latitude,
+    longitude: req.body.longitude
+  };
+  const sqlQuery = "INSERT INTO `incidents` (`User_id`, `latitude`, `longitude`) VALUES ('"+newIncident.userId+"', '"+newIncident.latitude+"', '"+newIncident.longitude+"')";
+  sql.query(sqlQuery, (err, result) => {
+    if(err) throw err;
+      console.log('1 record inserted.');
+      res.json(newIncident);
+  });
 });
 
 module.exports = router;
