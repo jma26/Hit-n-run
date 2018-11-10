@@ -1,27 +1,31 @@
 const JwtStrategy = require('passport-jwt').Strategy;
 const ExtractJwt = require('passport-jwt').ExtractJwt;
-const User = require('../db/models/User');
-const secretOrKey = require('../utils/keys').secretOrKey;
+const sql = require('../db/db');
+const keys = require('../utils/keys');
 
-let opts = {};
+const opts = {};
 
 opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
-opts.secretOrKey = secretOrKey;
+opts.secretOrKey = keys.secretOrKey;
 
 module.exports = passport => {
-  passport.use(new JwtStrategy(
-    opts, 
-    async(payload, done) => {
-      try {
-        // Find the user specified in the token. If the user doesn't exist, handle it, otherwise return the user
-        const user = await User.findUser(payload);
-        if(user === false) {
-          return done(null, false);
-        } else {
-          done(null, user);
-        }
-      } catch(err) {
-        done(error, false);
+  passport.use(new JwtStrategy(opts, (jwt_payload, done) => {
+    sql.query({
+      sql: 'SELECT * FROM `user` WHERE `id` = ?',
+    }, 
+    [jwt_payload.id],
+    (err, result) => {
+      if(result[0]) {
+        const user = {
+          id: result[0].id,
+          firstName: result[0].first_name,
+          lastName: result[0].last_name,
+          email: result[0].email
+        };
+        return done(null, user);
+      } else {
+        return done(null, false);
       }
-  }));
-}
+    });
+  }))
+};

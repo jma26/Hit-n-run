@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
 const validateInput = require('../utils/validateInput');
+const passport = require('passport');
 const jwt = require('jsonwebtoken');
 const sql = require('../db/db');
 const secretOrKey = require('../utils/keys').secretOrKey;
@@ -91,5 +92,18 @@ router.post('/login', (req, res) => {
     return res.status(400).json(isValid);
   }
 });
+
+// @ACCESS - Private
+// @ENDPOINT - /api/auth/current
+// @DESCRIPTION - Return currently logged in user
+router.get('/current', passport.authenticate('jwt', { session: false }), (req, res) => {
+  res.json({
+    id: req.user.id,
+    firstName: req.user.first_name,
+    lastName: req.user.last_name,
+    email: req.user.email
+  });
+});
+
 
 module.exports = router;
