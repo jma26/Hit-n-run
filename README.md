@@ -14,6 +14,10 @@
 
 * Adding incident reports
 
+### Todo:
+
+* Add a statistics route
+
 ### Scripts:
 
 > These scripts are supposed to be ran from the root-level of the file structure
