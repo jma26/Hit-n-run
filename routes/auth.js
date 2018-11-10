@@ -2,7 +2,9 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
 const validateInput = require('../utils/validateInput');
+const jwt = require('jsonwebtoken');
 const sql = require('../db/db');
+const secretOrKey = require('../utils/keys').secretOrKey;
 
 // @ACCESS - Public
 // @ENDPOINT - /api/auth/register
@@ -70,11 +72,11 @@ router.post('/login', (req, res) => {
           .then(match => {
             if(match) {
               const payload = {
-                id: user.id,
-                name: user.first_name + ' ' + user.last_name,
-                email: user.email
+                id: user.id
               };
-              return res.status(200).json(payload);
+              jwt.sign(payload, secretOrKey, {expiresIn: 86400}, (err, token) => {
+                res.json({ success: true, token: 'Bearer ' + token });
+              });
             } else {
               errors.incorrectPassword = 'Incorrect password.';
               return res.status(400).json(errors);
