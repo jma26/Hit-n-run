@@ -18,7 +18,7 @@ router.get('/all', (req, res) => {
 
 // @ACCESS - Private
 // @ENDPOINT - /api/incidents/add
-// @DESCRIPTION - Get all reported incidents
+// @DESCRIPTION - Report a new incident
 router.post('/add', passport.authenticate('jwt', { session: false }), (req, res) => {
   // Send out a new incident report to the database
   const newIncident = {
