@@ -34,4 +34,20 @@ router.post('/add', passport.authenticate('jwt', { session: false }), (req, res)
   });
 });
 
+// @ACCESS - Private
+// @ENDPOINT - /api/incidents/:id
+// @DESCRIPTION - Get incidents that the user reported
+router.get('/:id', passport.authenticate('jwt', { session: false }), (req, res) => {
+  const sqlQuery = "SELECT * FROM `incidents` WHERE `User_id` = ?";
+  sql.query({
+    sql: sqlQuery
+  },
+  [req.params.id],
+  (err, result) => {
+    if(err) throw err;
+      res.json(result);
+  }
+  );
+});
+
 module.exports = router;
