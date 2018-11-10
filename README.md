@@ -4,6 +4,12 @@
 
 `Back-end branch`
 
-### Todos:
+### Completed:
 
-* Incidents route
+* Registering users
+
+* Authenticating users
+
+* Getting incident reports
+
+* Adding incident reports
