@@ -13,3 +13,13 @@
 * Getting incident reports
 
 * Adding incident reports
+
+### Scripts:
+
+> These scripts are supposed to be ran from the root-level of the file structure
+
+* `npm run server` - Runs the Nodemon server.
+
+* `npm run client` - Runs the React server.
+
+* `npm run dev` - Runs both servers concurrently.
