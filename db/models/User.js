@@ -1,7 +1,7 @@
 const sql = require('../db');
 
 module.exports = {
-  findUser(id) {
+  findUserById(id) {
     sql.query({
       sql: 'SELECT * FROM `user` WHERE `id` = ?',
     }, 
