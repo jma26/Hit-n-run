@@ -32,9 +32,9 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `Hit-n-run`.`Incidents` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `longitude` INT(255) NULL,
-  `latitude` INT(255) NULL,
-  `time_of_accident` DATETIME NULL,
+  `longitude` DOUBLE NULL,
+  `latitude` DOUBLE NULL,
+  `time_of_accident` TIMESTAMP(6) NULL DEFAULT CURRENT_TIMESTAMP,
   `User_id` INT NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_Incidents_User_idx` (`User_id` ASC),
