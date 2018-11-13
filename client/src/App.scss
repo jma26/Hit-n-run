@@ -2,6 +2,7 @@
 @import './scss/_vars';
 // Navbar
 .navbar {
+  z-index: 999;
   position: fixed;
   top: 0;
   display: flex;
@@ -76,6 +77,11 @@
 #map {
   width: 100%;
   height: 100vh;
+  .leaflet-control-zoom {
+    position: fixed;
+    top: 60px;
+    left: 10px;
+  }
 }
 
 .dashboard__spinner--fade-out {

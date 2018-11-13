@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
 import Navbar from './layout/Navbar';
+import Map from './Map';
 
 class Dashboard extends Component {
 
   componentDidMount = () => {
+    const spinner = this.refs.spinner;
     setTimeout(() => {
-      const spinner = this.refs.spinner;
       spinner.classList.add('dashboard__spinner--fade-out');
     }, 1300);
+    spinner.style.display = 'none';
   }
 
   render() {
@@ -21,7 +23,7 @@ class Dashboard extends Component {
           </span>
         </div>
         <Navbar />
-        <div id="map"></div>
+        <Map />
       </div>
     )
   }
