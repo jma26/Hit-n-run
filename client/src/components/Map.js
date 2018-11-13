@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import L from 'leaflet';
+import axios from 'axios';
 
 class Map extends Component {
 
@@ -7,7 +8,8 @@ class Map extends Component {
     super();
     this.state = {
       incidents: []
-    }
+    };
+    this.fetchIncidents = this.fetchIncidents.bind(this);
   }
 
   componentDidMount() {
@@ -20,8 +22,14 @@ class Map extends Component {
         }),
       ]
     });
-
+    this.fetchIncidents();
   }
+
+  fetchIncidents() {
+    axios.get('http://localhost:8000/api/incidents/all')
+      .then(res => console.log(res.data))
+  }
+
   render() {
     return <div id="map"></div>
   }
