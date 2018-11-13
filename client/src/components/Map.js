@@ -10,11 +10,13 @@ class Map extends Component {
       incidents: []
     };
     this.fetchIncidents = this.fetchIncidents.bind(this);
+    this.placeMarkers = this.placeMarkers.bind(this);
   }
 
   componentDidMount() {
+    this.fetchIncidents();
     this.map = L.map('map', {
-      center: [51.505, -0.09],
+      center: [37.4314311, -121.8819455],
       zoom: 13,
       layers: [
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -22,12 +24,24 @@ class Map extends Component {
         }),
       ]
     });
-    this.fetchIncidents();
+    setTimeout(() => {
+      this.placeMarkers();
+    }, 750);
   }
 
   fetchIncidents() {
-    axios.get('http://localhost:8000/api/incidents/all')
-      .then(res => console.log(res.data))
+    axios.get('/api/incidents/all')
+      .then(res => res.data)
+      .then(data => this.setState({ incidents: data }));
+  }
+
+  placeMarkers() {
+    const incidents = this.state.incidents;
+    incidents.forEach(incident => {
+      L.marker([incident.latitude, incident.longitude]).addTo(this.map);
+      L.tooltip(`Incident ${incident.id}`);
+    })
+    console.log('Markers Placed');
   }
 
   render() {
