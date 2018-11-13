@@ -2,19 +2,23 @@
 
 > A data-visualization app of areas where hit-and-run incidents are more prevalent
 
-`Front-end branch`
+### Completed:
+
+* Registering users
+
+* Authenticating users
+
+* Getting incident reports
+
+* Adding incident reports
+
+* Map Dashboard
+
+* Map Markers
 
 ### Todo:
 
-* Landing page
-
-* Authenticaion pages(Log In/Registration)
-
-* Dashboard
-
-* Map View
-
-* Statistics
+* Add a statistics route
 
 ### Scripts:
 
