@@ -13,6 +13,9 @@
   background-color: $blue;
   color: #fff;
   font-family: 'Montserrat', Arial, Helvetica, sans-serif;
+  -webkit-box-shadow: 3px 5px 39px -7px rgba(0,0,0,0.75);
+  -moz-box-shadow: 3px 5px 39px -7px rgba(0,0,0,0.75);
+  box-shadow: 3px 5px 39px -7px rgba(0,0,0,0.75);
   .navbar__logo { 
     margin: 0 0 0 35px;
     padding: 0;

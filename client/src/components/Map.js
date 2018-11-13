@@ -3,6 +3,13 @@ import L from 'leaflet';
 
 class Map extends Component {
 
+  constructor() {
+    super();
+    this.state = {
+      incidents: []
+    }
+  }
+
   componentDidMount() {
     this.map = L.map('map', {
       center: [51.505, -0.09],
@@ -13,7 +20,7 @@ class Map extends Component {
         }),
       ]
     });
-    
+
   }
   render() {
     return <div id="map"></div>
