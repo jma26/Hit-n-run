@@ -1,11 +1,39 @@
 @import url('https://fonts.googleapis.com/css?family=Lato|Montserrat');
 @import './scss/_vars';
+// Navbar
+.navbar {
+  position: fixed;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  height: 50px;
+  background-color: $blue;
+  color: #fff;
+  font-family: 'Montserrat', Arial, Helvetica, sans-serif;
+  .navbar__logo { 
+    margin: 0 0 0 35px;
+    padding: 0;
+    font-size: 28px;
+    font-family: 'Lato', Arial, Helvetica, sans-serif;
+  }
+  .navbar__menu-icon {
+    position: absolute;
+    right: 35px;
+    font-size: 28px;
+    cursor: pointer;
+    &:hover {
+      transition: 0.2s;
+      color: darken(#fff, 10%);
+    }
+  }
+}
 
 // Dashboard
 .dashboard {
   width: 100%;
   height: 100vh;
-  background-color: $blue;
   .dashboard__spinner {
     opacity: 1;
     display: flex;
@@ -16,14 +44,14 @@
     width: 100%;
     height: 100vh;
     overflow: hidden;
-    p {
+    .dashboard__spinner__text {
       font-family: 'Lato', Arial, Helvetica, sans-serif;
       color: #fff;
       font-size: 42px;
       font-weight: bold;
       margin-bottom: 10px;
     }
-    .dashboard__spinner_outer-span {
+    .dashboard__spinner__outer-span {
       width: 200px;
       height: 7px;
       background-color: darken($blue, 10%);
@@ -33,7 +61,7 @@
       align-content: center;
       justify-content: center;
     }
-    .dashboard__spinner_inner-span {
+    .dashboard__spinner__inner-span {
       width: 0;
       height: 7px;
       background-color: #fff;
@@ -42,6 +70,12 @@
       animation-fill-mode: forwards;
     }
   }
+}
+
+// Map
+#map {
+  width: 100%;
+  height: 100vh;
 }
 
 .dashboard__spinner--fade-out {

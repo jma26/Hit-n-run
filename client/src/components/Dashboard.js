@@ -1,10 +1,11 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import Navbar from './layout/Navbar';
 
 class Dashboard extends Component {
 
   componentDidMount = () => {
-    const spinner = this.refs.spinner;
     setTimeout(() => {
+      const spinner = this.refs.spinner;
       spinner.classList.add('dashboard__spinner--fade-out');
     }, 1300);
   }
@@ -13,12 +14,14 @@ class Dashboard extends Component {
     return (
       <div className="dashboard">
         <div ref="spinner" className="dashboard__spinner">
-          <p>Swervie</p>
-          <span className="dashboard__spinner_outer-span">
-            <div className="dashboard__spinner_inner-span">
+          <p className="dashboard__spinner__text">Swervie</p>
+          <span className="dashboard__spinner__outer-span">
+            <div className="dashboard__spinner__inner-span">
             </div>
           </span>
         </div>
+        <Navbar />
+        <div id="map"></div>
       </div>
     )
   }
