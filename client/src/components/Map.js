@@ -26,7 +26,7 @@ class Map extends Component {
     });
     setTimeout(() => {
       this.placeMarkers();
-    }, 750);
+    }, 1000);
   }
 
   fetchIncidents() {
@@ -39,9 +39,8 @@ class Map extends Component {
     const incidents = this.state.incidents;
     incidents.forEach(incident => {
       L.marker([incident.latitude, incident.longitude]).addTo(this.map);
-      L.tooltip(`Incident ${incident.id}`);
     })
-    console.log('Markers Placed');
+    console.log(`${incidents.length} Markers Placed`);
   }
 
   render() {

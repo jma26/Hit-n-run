@@ -27,4 +27,4 @@ app.use('/api/auth', auth);
 app.use('/api/incidents', incidents);
 
 // Server
-app.listen(config.app.port, () => console.log(`Server is running on port ${port}.`));
+app.listen(config.app.port, () => console.log(`Server is running on port ${config.app.port}.`));
