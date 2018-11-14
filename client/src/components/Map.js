@@ -19,15 +19,18 @@ class Map extends Component {
 
   componentDidMount() {
     this.fetchIncidents();
-    this.map = L.map('map', {
-      center: [37.4314311, -121.8819455],
-      zoom: 13,
-      layers: [
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-          attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
-        }),
-      ]
-    });
+    setTimeout(() => {
+      this.map = L.map('map', {
+        // Fix the map centering
+        center: [`${this.state.incidents[Math.floor(Math.random() * this.state.incidents.length)].latitude}`, `${this.state.incidents[Math.floor(Math.random() * this.state.incidents.length)].longitude}`],
+        zoom: 3,
+        layers: [
+          L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
+          }),
+        ]
+      });
+    }, 500);
     setTimeout(() => {
       this.placeMarkers();
     }, 1000);
