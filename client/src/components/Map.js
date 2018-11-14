@@ -47,20 +47,20 @@ class Map extends Component {
     })
     console.log(`${incidents.length} Markers Placed`);
     setTimeout(() => {
-      console.log('Ready');
+      // Get data related to the marker
       const poppers = document.getElementsByClassName('leaflet-marker-icon');
       for(let i = 0; i < poppers.length; i++) {
         poppers[i].addEventListener('click', () => {
           setTimeout(() => {
             const popper = document.getElementsByClassName('leaflet-popup-content')[0].innerHTML;
-            const values = popper.split(" ");
+            const popperValues = popper.split(" ");
             this.setState({
               currentIncident: {
-                userId: values[2],
-                reportedAt: values[4]
+                userId: popperValues[2],
+                reportedAt: popperValues[4]
               }
             })
-          }, 300);
+          }, 250);
         });
       }
     }, 2000);
