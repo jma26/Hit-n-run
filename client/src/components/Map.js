@@ -30,7 +30,7 @@ class Map extends Component {
           }),
         ]
       });
-    }, 500);
+    }, 750);
     setTimeout(() => {
       this.placeMarkers();
     }, 1000);
