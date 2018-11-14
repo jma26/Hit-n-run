@@ -19,15 +19,18 @@ class Map extends Component {
 
   componentDidMount() {
     this.fetchIncidents();
-    this.map = L.map('map', {
-      center: [37.4314311, -121.8819455],
-      zoom: 13,
-      layers: [
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-          attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
-        }),
-      ]
-    });
+    setTimeout(() => {
+      this.map = L.map('map', {
+        // Fix the map centering
+        center: [`${this.state.incidents[Math.floor(Math.random() * this.state.incidents.length)].latitude}`, `${this.state.incidents[Math.floor(Math.random() * this.state.incidents.length)].longitude}`],
+        zoom: 3,
+        layers: [
+          L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
+          }),
+        ]
+      });
+    }, 750);
     setTimeout(() => {
       this.placeMarkers();
     }, 1000);
@@ -43,11 +46,13 @@ class Map extends Component {
     const incidents = this.state.incidents;
     incidents.forEach(incident => {
       // Place a marker and add a tooltip onto it - TODO: Modify the tooltip even further
-      L.marker([incident.latitude, incident.longitude]).addTo(this.map).bindPopup(`Reported by ${incident.User_id} at ${incident.time_of_accident}`);
+      L.marker([incident.latitude, incident.longitude]).addTo(this.map).bindPopup(`Reported by ${incident.User_id} at ${incident.time_of_accident}`).addEventListener('click', (e) => {
+        this.map.setView(e.target.getLatLng(), 13);
+      });
     })
     console.log(`${incidents.length} Markers Placed`);
     setTimeout(() => {
-      // Get data related to the marker
+      // Get data related to the marker - TODO: Show a card with details about the incident
       const poppers = document.getElementsByClassName('leaflet-marker-icon');
       for(let i = 0; i < poppers.length; i++) {
         poppers[i].addEventListener('click', () => {

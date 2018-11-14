@@ -3,7 +3,7 @@
 
 // Navbar
 .navbar {
-  z-index: 999;
+  z-index: 998;
   position: fixed;
   top: 0;
   display: flex;
@@ -54,6 +54,7 @@
 
 // Spinner
 .spinner {
+  position: absolute;
   z-index: 999;
   opacity: 1;
   display: flex;
