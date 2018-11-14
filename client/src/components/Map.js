@@ -38,7 +38,8 @@ class Map extends Component {
   placeMarkers() {
     const incidents = this.state.incidents;
     incidents.forEach(incident => {
-      L.marker([incident.latitude, incident.longitude]).addTo(this.map);
+      // Place a marker and add a tooltip onto it - TODO: Modify the tooltip even further
+      L.marker([incident.latitude, incident.longitude]).addTo(this.map).bindPopup(`Reported by ${incident.User_id} at ${incident.time_of_accident}`);
     })
     console.log(`${incidents.length} Markers Placed`);
   }
