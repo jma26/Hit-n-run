@@ -7,7 +7,11 @@ class Map extends Component {
   constructor() {
     super();
     this.state = {
-      incidents: []
+      incidents: [],
+      currentIncident: {
+        userId: "",
+        reportedAt: ""
+      }
     };
     this.fetchIncidents = this.fetchIncidents.bind(this);
     this.placeMarkers = this.placeMarkers.bind(this);
@@ -42,6 +46,24 @@ class Map extends Component {
       L.marker([incident.latitude, incident.longitude]).addTo(this.map).bindPopup(`Reported by ${incident.User_id} at ${incident.time_of_accident}`);
     })
     console.log(`${incidents.length} Markers Placed`);
+    setTimeout(() => {
+      // Get data related to the marker
+      const poppers = document.getElementsByClassName('leaflet-marker-icon');
+      for(let i = 0; i < poppers.length; i++) {
+        poppers[i].addEventListener('click', () => {
+          setTimeout(() => {
+            const popper = document.getElementsByClassName('leaflet-popup-content')[0].innerHTML;
+            const popperValues = popper.split(" ");
+            this.setState({
+              currentIncident: {
+                userId: popperValues[2],
+                reportedAt: popperValues[4]
+              }
+            })
+          }, 250);
+        });
+      }
+    }, 2000);
   }
 
   render() {
