@@ -5,7 +5,7 @@ const validateInput = require('../utils/validateInput');
 const passport = require('passport');
 const jwt = require('jsonwebtoken');
 const sql = require('../db/db');
-const keys = require('../utils/keys');
+const config = require('../config/config');
 
 // @ACCESS - Public
 // @ENDPOINT - /api/auth/register
@@ -75,7 +75,7 @@ router.post('/login', (req, res) => {
               const payload = {
                 id: user.id
               };
-              jwt.sign(payload, keys.secretOrKey, {expiresIn: 86400}, (err, token) => {
+              jwt.sign(payload, config.jwt.secret, {expiresIn: 86400}, (err, token) => {
                 res.json({ success: true, token: 'Bearer ' + token });
               });
             } else {
