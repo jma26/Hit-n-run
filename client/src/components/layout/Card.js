@@ -8,7 +8,7 @@ const Card = (props) => {
         <h3 className="card__location-text">{props.location}</h3>
       </div>
       <div className="card__info">
-        <h3>Reported By: {props.reportedBy}, at {props.reportedAt}</h3>
+        <h3 className="card__info-text">Reported By: {props.reportedBy}, at {props.reportedAt}</h3>
       </div>
     </div>
   )

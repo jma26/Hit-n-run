@@ -52,7 +52,7 @@ class Map extends Component {
     incidents.forEach(incident => {
       // Place a marker and add a tooltip onto it
       L.marker([incident.latitude, incident.longitude]).addTo(this.map).bindPopup(`Reported by ${incident.User_id} at ${incident.time_of_accident}`).addEventListener('click', (e) => {
-        this.map.setView(e.target.getLatLng(), 17);
+        this.map.setView(e.target.getLatLng(), 20);
       });
     })
     console.log(`${incidents.length} Markers Placed`);
