@@ -1,0 +1,16 @@
+// Dashboard
+.dashboard {
+  width: 100%;
+  height: 100vh;
+  // Map
+  #map {
+    z-index: 1;
+    width: 100%;
+    height: 100vh;
+    .leaflet-control-zoom {
+      position: fixed;
+      top: 60px;
+      left: 10px;
+    }
+  }
+}

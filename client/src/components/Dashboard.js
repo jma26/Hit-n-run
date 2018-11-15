@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import Navbar from './layout/Navbar';
 import Spinner from './layout/Spinner';
+import Navbar from './layout/Navbar';
 import Map from './Map';
 
 class Dashboard extends Component {
