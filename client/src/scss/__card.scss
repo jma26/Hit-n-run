@@ -1,0 +1,36 @@
+// Card
+.card {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  z-index: 998;
+  position: fixed;
+  bottom: 0;
+  width: 50%;
+  height: 20vh;
+  background-color: #fff;
+  -webkit-box-shadow: 0px -3px 22px -5px rgba(0,0,0,0.75);
+  -moz-box-shadow: 0px -3px 22px -5px rgba(0,0,0,0.75);
+  box-shadow: 0px -3px 22px -5px rgba(0,0,0,0.75);
+  font-family: 'Montserrat', Arial, Helvetica, sans-serif;
+  .card__location {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 80%;
+    margin: 10px 10%;
+    border-bottom: 1px solid #666;
+    .card__location-icon {
+      color: $blue;
+      font-size: 28px;
+      margin-right: 10px;
+    }
+  }
+  .card__info {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 80%;
+    margin: 10px 10%;
+  }
+}

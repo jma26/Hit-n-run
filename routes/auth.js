@@ -105,5 +105,20 @@ router.get('/current', passport.authenticate('jwt', { session: false }), (req, r
   });
 });
 
+// @ACCESS - Public
+// @ENDPOINT - /api/auth/username/:id
+// @DESCRIPTION - Return name of the user
+router.get('/username/:id', (req, res) => {
+  const sqlQuery = 'SELECT * FROM `user` WHERE `id` = ?';
+  sql.query({
+    sql: sqlQuery
+  },
+  [req.params.id],
+  (err, result) => {
+    if(err) throw err;
+      const username = result[0].first_name + ' ' + result[0].last_name; 
+      res.json(username);
+  });
+});
 
 module.exports = router;

@@ -1,0 +1,45 @@
+// Spinner
+.spinner {
+  position: absolute;
+  z-index: 999;
+  opacity: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: $blue;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  .spinner__text {
+    font-family: 'Lato', Arial, Helvetica, sans-serif;
+    color: #fff;
+    font-size: 42px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  .spinner__outer-span {
+    width: 200px;
+    height: 7px;
+    background-color: darken($blue, 10%);
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+  }
+  .spinner__inner-span {
+    width: 0;
+    height: 7px;
+    background-color: #fff;
+    border-radius: 10px;
+    animation: animatedSpinner 1.2s;
+    animation-fill-mode: forwards;
+  }
+}
+
+.spinner--fade-out {
+  animation: fadeOutSpinner 0.7s;
+  animation-fill-mode: forwards;
+  animation-direction: normal;
+}
