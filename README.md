@@ -16,13 +16,15 @@
 
 * Map markers
 
+* Cards on the map dashboard for showing more details on the clicked report
+
 ### Todo:
 
 * Add a statistics route
 
 * Statistics dashboard
 
-* Cards on the map dashboard for showing more details on the clicked report
+* Animate the cards
 
 * Landing page
 
