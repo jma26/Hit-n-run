@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import L from 'leaflet';
 import axios from 'axios';
 import Card from './layout/Card';
+import mapquest from '../config/keys';
 
 class Map extends Component {
 
@@ -26,7 +27,7 @@ class Map extends Component {
     this.fetchIncidents();
     setTimeout(() => {
       this.map = L.map('map', {
-        // Take a random marker from the state and center the map on it
+        // TODO: Take a random marker, or a marker near to the geolocation of the user and center the map on it
         center: [51.509865, -0.118092],
         zoom: 3,
         layers: [
@@ -68,24 +69,21 @@ class Map extends Component {
       poppers[i].addEventListener('click', () => {
         setTimeout(() => {
           // By clicking on the marker, take it's data, call the API to get the user's name via the ID,
-          // then call the GeoNames API to get the street name, then set it all in state
+          // then call the MapQuest API to get the street name, then set it all in state
           const popper = document.getElementsByClassName('leaflet-popup-content')[0].innerHTML;
           const popperValues = popper.split(" ");
           axios.get(`/api/auth/username/${popperValues[2]}`)
             .then(res => res.data)
             .then(data => {
               this.setState({ currentIncident: {location: [this.state.incidents[i].latitude, this.state.incidents[i].longitude], reportedBy: data, reportedAt: popperValues[4]} });
-                axios.get(`http://api.geonames.org/findNearbyStreetsOSMJSON?lat=${this.state.currentIncident.location[0]}&lng=${this.state.currentIncident.location[1]}&username=swervie`)
+                axios.get(`http://open.mapquestapi.com/geocoding/v1/reverse?key=${mapquest.key}&location=${this.state.currentIncident.location[0]},${this.state.currentIncident.location[1]}&includeRoadMetadata=true&includeNearestIntersection=true`)
                 .then(res => res.data)
                 .then(data => {
-                  if(Reflect.has(data, 'streetSegment')) {
-                    const streetName = data.streetSegment[0].name; 
-                    this.setState({ streetName: streetName, isPrepared: true});
-                  } else {
-                    const streetName = `${this.state.incidents[i].latitude}, ${this.state.incidents[i].longitude}`; 
-                    this.setState({ streetName: streetName, isPrepared: true});
+                  const results = data.results[0].locations;
+                  const streetName = results[0].street;
+                  this.setState({ streetName: streetName, isPrepared: true});
                   }
-                });
+                );
               })
         }, 250);
       });
