@@ -27,7 +27,7 @@ class Map extends Component {
     this.fetchIncidents();
     setTimeout(() => {
       this.map = L.map('map', {
-        // Take a random marker from the state and center the map on it
+        // TODO: Take a random marker, or a marker near to the geolocation of the user and center the map on it
         center: [51.509865, -0.118092],
         zoom: 3,
         layers: [
@@ -69,7 +69,7 @@ class Map extends Component {
       poppers[i].addEventListener('click', () => {
         setTimeout(() => {
           // By clicking on the marker, take it's data, call the API to get the user's name via the ID,
-          // then call the GeoNames API to get the street name, then set it all in state
+          // then call the MapQuest API to get the street name, then set it all in state
           const popper = document.getElementsByClassName('leaflet-popup-content')[0].innerHTML;
           const popperValues = popper.split(" ");
           axios.get(`/api/auth/username/${popperValues[2]}`)
