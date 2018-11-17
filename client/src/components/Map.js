@@ -16,6 +16,7 @@ class Map extends Component {
         reportedAt: ""
       },
       streetName: '',
+      reportedTime: '',
       isPrepared: false
     };
     this.fetchIncidents = this.fetchIncidents.bind(this);
@@ -82,6 +83,22 @@ class Map extends Component {
                   const results = data.results[0].locations;
                   const streetName = results[0].street;
                   this.setState({ streetName: streetName, isPrepared: true});
+                  // This is the messiest way of getting a proper timestamp from MySQL, i am sorry lol.
+                  const dateOne = this.state.currentIncident.reportedAt;
+                  const dateTwo = dateOne.replace('T', ' ');
+                  const dateThree = dateTwo.replace('.000Z', '');
+                  const dateFour = new Date(Date.parse(dateThree));
+                  let weekday = new Array(7);
+                    weekday[0] =  "Sunday";
+                    weekday[1] = "Monday";
+                    weekday[2] = "Tuesday";
+                    weekday[3] = "Wednesday";
+                    weekday[4] = "Thursday";
+                    weekday[5] = "Friday";
+                    weekday[6] = "Saturday";
+                  const dayName = weekday[dateFour.getDay()];
+                  const dateFive = `${dayName}, ${dateFour.getHours()}:${dateFour.getMinutes()}`;
+                  this.setState({ reportedTime: dateFive });
                   }
                 );
               })
@@ -94,7 +111,7 @@ class Map extends Component {
     const isPrepared = this.state.isPrepared;
     let card; 
     if(isPrepared === true) {
-      card = <Card location={this.state.streetName} reportedBy={this.state.currentIncident.reportedBy} reportedAt={this.state.currentIncident.reportedAt} />;
+      card = <Card location={this.state.streetName} reportedBy={this.state.currentIncident.reportedBy} reportedAt={this.state.reportedTime} />;
       setTimeout(() => {
         document.getElementById('card').style.display = 'flex';
       }, 250);
