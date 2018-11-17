@@ -115,7 +115,11 @@ class Map extends Component {
     if(isPrepared === true) {
       card = <Card location={this.state.streetName} reportedBy={this.state.currentIncident.reportedBy} reportedAt={this.state.reportedTime} />;
       setTimeout(() => {
-        document.getElementById('card').style.transform = 'translateX(0)';
+        if(window.innerWidth > 768) {
+          document.getElementById('card').style.transform = 'translateX(50%)';
+        } else {
+          document.getElementById('card').style.transform = 'translateX(0)';
+        }
       }, 250);
     }
     return (
