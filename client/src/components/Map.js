@@ -36,11 +36,14 @@ class Map extends Component {
             attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a>',
           }),
         ]
+      }).on('moveend', () => {
+        const card = document.getElementById('card');
+        if(card) {
+          card.style.transform = 'translateX(-110%)';
+        }
       });
-    }, 750);
-    setTimeout(() => {
       this.placeMarkers();
-    }, 1000);
+    }, 750);
   }
 
   fetchIncidents() {
@@ -57,7 +60,6 @@ class Map extends Component {
         this.map.setView(e.target.getLatLng(), 20);
       });
     })
-    console.log(`${incidents.length} Markers Placed`);
     setTimeout(() => {
       // Get data related to the marker
       this.getMarkerData();
@@ -83,7 +85,7 @@ class Map extends Component {
                   const results = data.results[0].locations;
                   const streetName = results[0].street;
                   this.setState({ streetName: streetName, isPrepared: true});
-                  // This is the messiest way of getting a proper timestamp from MySQL, i am sorry lol.
+                  // This is the messiest way of getting a proper timestamp from the MySQL response, i am sorry lol.
                   const dateOne = this.state.currentIncident.reportedAt;
                   const dateTwo = dateOne.replace('T', ' ');
                   const dateThree = dateTwo.replace('.000Z', '');
@@ -113,7 +115,7 @@ class Map extends Component {
     if(isPrepared === true) {
       card = <Card location={this.state.streetName} reportedBy={this.state.currentIncident.reportedBy} reportedAt={this.state.reportedTime} />;
       setTimeout(() => {
-        document.getElementById('card').style.display = 'flex';
+        document.getElementById('card').style.transform = 'translateX(0)';
       }, 250);
     }
     return (

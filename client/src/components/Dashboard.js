@@ -9,10 +9,10 @@ class Dashboard extends Component {
     const spinner = document.getElementById('spinner');
     setTimeout(() => {
       spinner.classList.add('spinner--fade-out');
-    }, 1300);
+    }, 1500);
     setTimeout(() => {
       spinner.style.display = 'none';
-    }, 2000);
+    }, 2250);
   }
   
   render() {
