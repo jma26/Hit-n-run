@@ -24,8 +24,6 @@
 
 * Statistics dashboard
 
-* Animate the cards
-
 * Landing page
 
 * Login/Registration forms
